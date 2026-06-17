@@ -1,0 +1,48 @@
+services:
+  redpanda:
+    image: redpandadata/redpanda:v24.2.7
+    command:
+      - redpanda start
+      - --smp 1
+      - --memory 512M
+      - --overprovisioned
+      - --node-id 0
+      - --kafka-addr PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:9092
+    ports: ["9092:9092"]
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -q 'Healthy:.*true'"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  postgres:
+    image: postgres:16
+    environment: { POSTGRES_DB: ttc, POSTGRES_USER: ttc, POSTGRES_PASSWORD: ttc }
+    ports: ["5434:5432"]
+    volumes:
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ttc -d ttc"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  producer:
+    build: .
+    command: python -m ttc_stream.producer
+    environment:
+      KAFKA_BOOTSTRAP: redpanda:9092
+      POLL_SECONDS: "20"
+    depends_on:
+      redpanda: { condition: service_healthy }
+
+  consumer:
+    build: .
+    command: python -m ttc_stream.consumer
+    environment:
+      KAFKA_BOOTSTRAP: redpanda:9092
+      POSTGRES_DSN: host=postgres port=5432 dbname=ttc user=ttc password=ttc
+    depends_on:
+      redpanda: { condition: service_healthy }
+      postgres: { condition: service_healthy }
