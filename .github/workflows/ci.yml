@@ -1,0 +1,22 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env: { POSTGRES_DB: ttc, POSTGRES_USER: ttc, POSTGRES_PASSWORD: ttc }
+        ports: ["5434:5432"]
+        options: --health-cmd "pg_isready -U ttc" --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12", cache: pip }
+      - run: pip install -r requirements.txt
+      - run: ruff check . && ruff format --check .
+      - name: Apply schema
+        run: PGPASSWORD=ttc psql -h localhost -p 5434 -U ttc -d ttc -f sql/schema.sql
+      - run: pytest -q
+        env:
+          POSTGRES_DSN: host=localhost port=5434 dbname=ttc user=ttc password=ttc
