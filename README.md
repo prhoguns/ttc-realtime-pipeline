@@ -1,5 +1,7 @@
 # TTC Real-Time Pipeline
 
+_Portfolio sprint timeline: January–September 2026. Reported results retain their actual run dates._
+
 Streams live TTC vehicle positions from the GTFS-Realtime feed through a Kafka-compatible broker
 into PostgreSQL, with SQL views for what a transit ops dashboard needs: where every vehicle is
 now, how many are active per route, and which routes are crawling.
