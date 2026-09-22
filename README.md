@@ -73,3 +73,7 @@ docker compose run --rm -e POSTGRES_DSN="host=postgres dbname=ttc user=ttc passw
 - A Grafana panel on `v_route_activity`, or the positions into the sister project's dbt models.
 
 Data: TTC GTFS-Realtime, published under the [Open Government Licence – Toronto](https://open.toronto.ca/open-data-license/).
+
+## Acknowledgments
+
+AI tools assisted with documentation and repository organization.
