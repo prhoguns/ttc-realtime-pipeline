@@ -17,7 +17,7 @@ flowchart LR
     PG --> V[views: v_latest_positions<br/>v_route_activity · v_route_speed_15m]
 ```
 
-## Measured (first run, 2026-09-22 02:17–02:29 UTC, a Sunday night)
+## Measured (first run, 2026-09-22 02:17–02:29 UTC)
 
 | | |
 |---|---|
