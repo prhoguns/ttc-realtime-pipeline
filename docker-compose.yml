@@ -1,6 +1,6 @@
 services:
   redpanda:
-    image: redpandadata/redpanda:v24.2.7
+    image: redpandadata/redpanda:v26.2.4
     command:
       - redpanda start
       - --smp 1
@@ -17,7 +17,7 @@ services:
       retries: 20
 
   postgres:
-    image: postgres:16
+    image: postgres:18
     environment: { POSTGRES_DB: ttc, POSTGRES_USER: ttc, POSTGRES_PASSWORD: ttc }
     ports: ["5434:5432"]
     volumes:

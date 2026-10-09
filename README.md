@@ -6,7 +6,7 @@ Streams live TTC vehicle positions from the GTFS-Realtime feed through a Kafka-c
 into PostgreSQL, with SQL views for what a transit ops dashboard needs: where every vehicle is
 now, how many are active per route, and which routes are crawling.
 
-**Stack:** Python 3.12 · GTFS-Realtime (protobuf) · Redpanda (Kafka API) · PostgreSQL 16 · Docker Compose
+**Stack:** Python 3.14 · GTFS-Realtime (protobuf) · Redpanda (Kafka API) · PostgreSQL 18 · Docker Compose
 
 ```mermaid
 flowchart LR
