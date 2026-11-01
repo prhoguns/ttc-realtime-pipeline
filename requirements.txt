@@ -1,7 +1,7 @@
 gtfs-realtime-bindings==3.0.0
 protobuf==7.36.2
 requests==2.34.2
-confluent-kafka==2.16.0
+confluent-kafka==2.16.1
 psycopg[binary]==3.3.6
-pytest==9.1.1
-ruff==0.16.10
+pytest==9.2.0
+ruff==0.17.3
